@@ -5,6 +5,7 @@ import os
 import sys
 
 
+# open Terminal if closed (MacOS)
 def ensure_terminal():
     # Check if a terminal (TTY) is attached
     if not sys.stdin.isatty():
@@ -21,6 +22,8 @@ def symbleChoose():
     p = next(p for _ in iter(int, 1) if (p := random.randint(0, 7)) != s)
     return bestSnake[s], bestSnake[p] # Return the characters
 
+
+# start screen asking for input
 def startScreen(stdscr, n):
     # Get screen size
     sh, sw = stdscr.getmaxyx()   
@@ -49,7 +52,7 @@ def startScreen(stdscr, n):
             break
     
     
-
+# main function
 def game(stdscr, l):
     timeDelay = [300, 250, 200, 150, 120, 100, 85, 70, 60, 50]
     timeOut = timeDelay[l] # a delay in miliseconds
@@ -67,10 +70,10 @@ def game(stdscr, l):
     win = curses.newwin(game_h, game_w, 1, 1) # place the top-left corner of the window 
                                               # one row down and one column in from 
                                               # the very top-left of the terminal
-    win.keypad(1)                             # return a single, easy-to-use constant
-    win.timeout(timeOut)                          # wait for 100 milliseconds for a keypress
+    win.keypad(1)                # return a single, easy-to-use constant
+    win.timeout(timeOut)         # wait for 100 milliseconds for a keypress
     
-        # Initial snake (centered)
+    # Initial snake (centered)
     snake = [(game_h//2, game_w//2 + i) for i in range(3)][::-1]
     direction = (0, 1)
     score = 0
@@ -81,6 +84,7 @@ def game(stdscr, l):
     # get the symbles
     snake_sym, prey_sym = symbleChoose()
     
+    # pause
     paused = False
     while True:
         key = win.getch()
